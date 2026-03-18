@@ -255,7 +255,3 @@ Open `excel/Healthcare_Summary_Tables.xlsx` for:
 - **Data Integration:** Combining datasets from multiple sources with different granularities
 - **Documentation:** Professional README, code comments, methodology documentation
 - **Version Control:** Git/GitHub for project management
-
----
-
-*This project was developed as part of a data analytics portfolio to demonstrate SQL, Excel, and Tableau proficiency in healthcare data analysis.*
