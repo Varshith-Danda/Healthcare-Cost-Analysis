@@ -7,8 +7,7 @@ Date: March 2026
 ==========================================
 
 PROJECT STRUCTURE:
-- This file: SQL queries and technical methodology
-- FINDINGS.md: Detailed analysis, interpretations, and implications
+- This file: SQL queries with explanations and findings
 - README.md: Project overview and key findings summary
 - Excel files: Summary tables for quick reference
 - Tableau workbook: Interactive visualizations and dashboards
@@ -61,20 +60,18 @@ DATA CLEANING:
 ANALYSIS APPROACH:
 - Queries 1-6: Septicemia-specific (most common condition, controlled comparison)
 - Queries 7-11: All conditions (validates patterns are systemic, not disease-specific)
-- See FINDINGS.md for detailed interpretation of each query's results
 */
 
 -- ==========================================
 -- SECTION 1: SEPTICEMIA & ALASKA DEEP DIVE (Q1-6)
 -- Focused analysis on most common condition with Alaska cost comparison
--- See FINDINGS.md Section 1 for detailed analysis
 -- ========================================== 
 
 
 -- Query 1: Identify Most Common Medical Condition
 -- Purpose: Establish baseline condition for controlled state-to-state comparison
--- Output: Condition name, number of hospitals treating it, total patient volume
--- See FINDINGS.md Query 1 for analysis of results
+-- Finding: Septicemia treated at 2,678 hospitals with 561,795 total patients
+-- Why this matters: Universal treatment availability enables fair cost comparisons across states
 SELECT
     "DRG_Desc" AS condition_name,
     COUNT(DISTINCT "Rndrng_Prvdr_CCN") AS num_hospitals,
@@ -86,9 +83,9 @@ ORDER BY num_hospitals DESC;
 
 -- Query 2: State-Level Cost Rankings for Septicemia Treatment
 -- Purpose: Compare Medicare payments across all 51 states for identical treatment
+-- Finding: Alaska charges $24,728 (highest), Vermont $12,079 (lowest) - 105% difference
+-- Why this matters: Identifies extreme cost outliers that need investigation
 -- Methodology: Weighted average by patient volume to reflect typical patient experience
--- Output: State, total patients, number of hospitals, average payment per patient
--- See FINDINGS.md Query 2 for cost variation analysis and state rankings
 SELECT 
     "Rndrng_Prvdr_State_Abrvtn" AS state,
     SUM("Tot_Dschrgs") AS total_patients,
@@ -105,9 +102,9 @@ ORDER BY avg_payment DESC;
 
 -- Query 3: Alaska Rural vs Urban Cost Analysis
 -- Purpose: Determine if Alaska's high costs are concentrated in remote areas
--- Geographic Classification: RUCA codes 1-3 (urban), 4-6 (suburban), 7-10 (rural)
--- Output: Area type, average payment, patient volume, number of hospitals
--- See FINDINGS.md Query 3 for rural premium analysis specific to Alaska
+-- Finding: Rural Alaska charges $31,249 (32% more than urban $23,693)
+-- Why this matters: Tests if geography within Alaska explains the high baseline costs
+-- Note: Even Alaska's urban areas are expensive compared to national averages
 SELECT 
     CASE 
         WHEN "Rndrng_Prvdr_RUCA" <= 3 THEN 'urban'
@@ -129,10 +126,10 @@ ORDER BY avg_payment DESC;
 
 -- Query 4: Alaska vs Vermont - Cost and Vulnerability Comparison
 -- Purpose: Compare highest-cost and lowest-cost states on socioeconomic factors
--- Hypothesis Test: Do high costs correlate with vulnerable populations?
--- Data Integration: Combines hospital costs (2023) with CDC vulnerability data (2022)
--- Output: State metrics including cost, vulnerability, poverty, insurance, demographics
--- See FINDINGS.md Query 4 for detailed comparative analysis
+-- Finding: Alaska charges $24,728 with 0.57 vulnerability vs Vermont $12,079 with 0.23 vulnerability
+-- Why this matters: Tests if high costs correlate with vulnerable populations needing more care
+-- Key insight: Alaska has BOTH higher costs AND higher vulnerability (counterintuitive - should cost less if population is struggling)
+-- Data note: Combines hospital costs (2023) with CDC vulnerability data (2022)
 WITH septicemia_costs AS (
     SELECT 
         "Rndrng_Prvdr_State_Abrvtn" AS state,
@@ -182,11 +179,11 @@ ORDER BY v.total_population;
 
 
 -- Query 5: Alaska vs Vermont - Adding Hospital Quality to Comparison
--- Purpose: Test if higher costs correspond to better quality care
--- Data Integration: Combines cost, vulnerability, and quality data from three sources
--- Note: Quality ratings (2025) represent overall hospital performance, not condition-specific
--- Output: Comprehensive state comparison including cost, vulnerability, and quality metrics
--- See FINDINGS.md Query 5 for cost-quality correlation analysis
+-- Purpose: Test if Alaska's high costs buy better quality care
+-- Finding: Both states have poor quality (~2.88 rating) despite Alaska charging 2× more
+-- Why this matters: Proves Alaska's high costs don't translate to better outcomes
+-- Key insight: This is the "triple burden" - high cost, high vulnerability, poor quality
+-- Data note: Quality ratings (2025) represent overall hospital performance, not septicemia-specific (CMS doesn't rate by condition)
 WITH septicemia_costs AS (
     SELECT 
         "Rndrng_Prvdr_State_Abrvtn" AS state,
@@ -247,10 +244,11 @@ WHERE c.state IN ('AK', 'VT');
 
 
 -- Query 6: Alaska vs Similar Population States - Peer Comparison
--- Purpose: Compare Alaska to states with similar population size (500K-1M)
--- Rationale: Controls for population-related factors (economies of scale, infrastructure)
--- Output: State metrics with quality ranking among peer group
--- See FINDINGS.md Query 6 for peer state analysis and Alaska's relative position
+-- Purpose: Compare Alaska to states with similar population size (500K-1M) to control for scale
+-- Finding: Among 7 peer states, Alaska ranks 5th in quality but 2nd in cost (worst value)
+-- Why this matters: Shows Alaska's problem isn't just "small state" - other small states have better quality for less cost
+-- Key insight: Vermont has similar poor quality but charges half the price, proving Alaska's costs aren't justified
+-- Population filter: 500K-1M ensures comparable infrastructure and economies of scale
 WITH septicemia_costs AS (
     SELECT 
         "Rndrng_Prvdr_State_Abrvtn" AS state,
@@ -315,16 +313,15 @@ ORDER BY q.avg_quality_rating DESC;
 -- ==========================================
 -- SECTION 2: BROADER VALIDATION (Q7-11)
 -- Testing if patterns hold across all medical conditions (not just septicemia)
--- See FINDINGS.md Section 2 for cross-validation analysis
 -- ==========================================
 
 
 -- Query 7: National Rural vs Urban Healthcare Costs (All Conditions)
--- Purpose: Determine prevalence of rural healthcare premiums across U.S.
--- Scope: All medical conditions (not septicemia-specific) for broader pattern validation
--- Methodology: Compares rural vs urban costs within each state using RUCA classification
--- Output: States where rural costs exceed urban, with premium percentage
--- See FINDINGS.md Query 7 for national rural premium analysis and Alaska context
+-- Purpose: Determine how common rural healthcare premiums are across the U.S.
+-- Finding: Only 4 of 51 states charge rural areas more (NM, CO, KS, CA) - just 8%
+-- Why this matters: Challenges common assumption that rural healthcare is always more expensive
+-- Key insight: Alaska's 32% rural premium (from Query 3) is unusual nationally
+-- Data scope: All medical conditions (not septicemia-specific) to validate broad pattern
 WITH area_costs AS (
     SELECT 
         "Rndrng_Prvdr_State_Abrvtn" AS state,
@@ -365,11 +362,11 @@ ORDER BY rural_premium_pct DESC;
 
 
 -- Query 8: Cost vs Vulnerability Correlation Analysis (All Conditions)
--- Purpose: Test if high healthcare costs correlate with socioeconomically vulnerable populations
--- Hypothesis: Higher costs may reflect struggling populations requiring more intensive care
--- Scope: All medical conditions for systemic pattern validation
--- Output: State-level cost and vulnerability metrics with categorization
--- See FINDINGS.md Query 8 for correlation analysis and scatter plot interpretation
+-- Purpose: Test if high healthcare costs correlate with vulnerable populations
+-- Finding: Mixed pattern - 7 of 10 expensive states are vulnerable, but not all vulnerable states are expensive
+-- Why this matters: If vulnerable populations needed more care, costs might be justified - but pattern is inconsistent
+-- Example: Mississippi (vulnerability 0.75) costs $13,173 while Alaska (vulnerability 0.57) costs $24,894
+-- Key insight: Vulnerability doesn't fully explain cost variation
 WITH state_costs AS (
     SELECT 
         "Rndrng_Prvdr_State_Abrvtn" AS state,
@@ -411,10 +408,10 @@ ORDER BY c.avg_payment DESC;
 
 
 -- Query 9: Vulnerability vs Quality Correlation Analysis (All Conditions)
--- Purpose: Test if vulnerable populations receive lower quality healthcare
--- Hypothesis: Double burden - struggling communities may have worse hospital quality
--- Output: State-level vulnerability and quality metrics with categorization
--- See FINDINGS.md Query 9 for correlation analysis and policy implications
+-- Purpose: Test if vulnerable populations receive lower quality healthcare (double burden)
+-- Finding: Moderate correlation - 6 of 10 most vulnerable states have below-average quality
+-- Why this matters: Suggests struggling populations may face both economic hardship AND poor healthcare
+-- Key insight: Pattern exists but isn't universal - some vulnerable states have good hospitals
 WITH state_vulnerability AS (
     SELECT 
         state,
@@ -458,12 +455,13 @@ INNER JOIN state_quality q ON v.state = q.state
 ORDER BY v.avg_vulnerability DESC;
 
 
--- Query 10: Cost vs Quality Correlation Analysis (All Conditions)
--- Purpose: Test if higher healthcare spending produces better quality outcomes
--- Hypothesis: "You get what you pay for" - expensive states should have better hospitals
--- Scope: All medical conditions across all 51 states
--- Output: State-level cost and quality metrics with categorization
--- See FINDINGS.md Query 10 for statistical analysis (R² calculation) and key finding interpretation
+-- Query 10: Cost vs Quality Correlation Analysis - PRIMARY FINDING (All Conditions)
+-- Purpose: Test if higher healthcare spending produces better quality outcomes ("you get what you pay for")
+-- Finding: NO CORRELATION - R² = 0.001 (essentially zero)
+-- Why this matters: This is the project's most important finding - expensive states don't get better care
+-- Examples: DC ($31,173, quality 2.29) and Alaska ($24,894, quality 2.88) vs cheap states with similar quality
+-- Key insight: Healthcare markets are failing - prices vary dramatically but quality doesn't improve with spending
+-- Implication: Cost variation is driven by market factors, not quality differences
 WITH state_costs AS (
     SELECT 
         "Rndrng_Prvdr_State_Abrvtn" AS state,
@@ -503,9 +501,10 @@ ORDER BY c.avg_payment DESC;
 
 -- Query 11: Patient Volume vs Cost Efficiency Analysis (All Conditions)
 -- Purpose: Test if high patient volume per hospital reduces costs through economies of scale
--- Hypothesis: Hospitals treating more patients should have lower per-patient costs
--- Output: State-level metrics showing patient volume, costs, and efficiency ratio
--- See FINDINGS.md Query 11 for efficiency analysis and volume-cost relationship
+-- Finding: Weak correlation - volume varies from 644 to 4,479 patients per hospital but doesn't predict costs
+-- Why this matters: If volume created efficiency, high-volume states should have lower costs - but they don't
+-- Example: Louisiana (802 patients/hospital, $13,825) vs Alaska (1,173 patients/hospital, $24,894)
+-- Key insight: Economies of scale are not the primary cost driver - other factors dominate
 WITH state_metrics AS (
     SELECT 
         "Rndrng_Prvdr_State_Abrvtn" AS state,
