@@ -2,9 +2,9 @@
 
 A comprehensive data analysis examining geographic variation in U.S. healthcare costs, quality outcomes, and the disconnect between spending and care quality.
 
-[![Tableau](https://img.shields.io/badge/Tableau-E97627?style=for-the-badge&logo=Tableau&logoColor=white)](YOUR_TABLEAU_PUBLIC_LINK_HERE)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Excel](https://img.shields.io/badge/Microsoft_Excel-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white)](https://www.microsoft.com/en-us/microsoft-365/excel)
+[![Tableau](https://img.shields.io/badge/Tableau-E97627?style=for-the-badge&logo=Tableau&logoColor=white)](https://public.tableau.com/app/profile/sai.krishna.varshith.danda1231/viz/Healthcare_Cost_Analysis_17736853143620/Story-HealthcareCostAnalysis)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](sql/healthcare_analysis.sql)
+[![Excel](https://img.shields.io/badge/Microsoft_Excel-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white)](excel/Healthcare_Summary_Tables.xlsx)
 
 ---
 
