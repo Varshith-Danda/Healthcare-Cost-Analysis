@@ -77,9 +77,9 @@ All datasets are publicly available from U.S. government agencies:
 
 | Dataset | Source | Year | Records | Description |
 |---------|--------|------|---------|-------------|
-| **Hospital Costs** | [CMS Medicare IPPS](https://data.cms.gov/provider-summary-by-type-of-service/medicare-inpatient-hospitals) | 2023 | 146,427 | Medicare inpatient payment data by hospital and diagnosis |
+| **Hospital Costs** | [CMS Medicare IPPS](https://data.cms.gov/provider-summary-by-type-of-service/medicare-inpatient-hospitals/medicare-inpatient-hospitals-by-provider-and-service/data) | 2023 | 146,427 | Medicare fee-for-service inpatient payment data by hospital and diagnosis-related group (DRG) |
 | **Hospital Quality** | [CMS Hospital Compare](https://data.cms.gov/provider-data/dataset/xubh-q36u) | 2025 | 2,869 | CMS 5-star quality ratings for U.S. hospitals |
-| **Community Vulnerability** | [CDC Social Vulnerability Index](https://www.atsdr.cdc.gov/placeandhealth/svi/data_documentation_download.html) | 2022 | 3,144 | County-level socioeconomic and demographic vulnerability metrics |
+| **Community Vulnerability** | [CDC Social Vulnerability Index](https://www.atsdr.cdc.gov/place-health/php/svi/svi-data-documentation-download.html) | 2022 | 3,144 | County-level socioeconomic and demographic vulnerability metrics |
 
 **Note on Data Years:** Different years reflect agency release schedules. Healthcare cost patterns and community demographics represent stable, long-term trends validated across multiple years.
 
