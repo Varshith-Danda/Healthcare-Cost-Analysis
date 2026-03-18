@@ -4,7 +4,7 @@ A comprehensive data analysis examining geographic variation in U.S. healthcare 
 
 [![Tableau](https://img.shields.io/badge/Tableau-E97627?style=for-the-badge&logo=Tableau&logoColor=white)](https://public.tableau.com/app/profile/sai.krishna.varshith.danda1231/viz/Healthcare_Cost_Analysis_17736853143620/Story-HealthcareCostAnalysis)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](sql/healthcare_analysis.sql)
-[![Excel](https://img.shields.io/badge/Microsoft_Excel-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white)](excel/Healthcare_Summary_Tables.xlsx)
+[![Excel](https://img.shields.io/badge/Microsoft_Excel-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white)](excel/)
 
 ---
 
@@ -100,7 +100,7 @@ The `/data/` folder contains CSV files generated from SQL analysis:
 ## Interactive Visualizations
 
 ### View Live Dashboards
-[**Explore Interactive Tableau Dashboards**](YOUR_TABLEAU_PUBLIC_LINK_HERE)
+[**Explore Interactive Tableau Dashboards**](https://public.tableau.com/app/profile/sai.krishna.varshith.danda1231/viz/Healthcare_Cost_Analysis_17736853143620/Story-HealthcareCostAnalysis)
 
 The Tableau workbook includes:
 - **9 Individual Charts** - Maps, scatter plots, bar charts, comparison tables
