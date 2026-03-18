@@ -1,6 +1,6 @@
 /*
 ==========================================
-HEALTHCARE COST & EQUITY ANALYSIS
+HEALTHCARE COST INEQUITY ANALYSIS
 Analyzing Medicare hospital costs, community vulnerability, and quality across US states
 Author: Sai Krishna Varshith Danda
 Date: March 2026
