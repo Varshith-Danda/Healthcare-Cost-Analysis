@@ -223,7 +223,7 @@ The finding that only 8% of states charge rural premiums challenges common assum
 ## How to Explore This Project
 
 ### Option 1: Interactive Dashboards (Recommended)
-Visit the [Tableau Public dashboard](YOUR_TABLEAU_PUBLIC_LINK_HERE) to:
+Visit the [Tableau Public dashboard](https://public.tableau.com/app/profile/sai.krishna.varshith.danda1231/viz/Healthcare_Cost_Analysis_17736853143620/Story-HealthcareCostAnalysis) to:
 - Interact with visualizations
 - Filter by state, condition, or metric
 - Explore the 5-slide story mode presentation
