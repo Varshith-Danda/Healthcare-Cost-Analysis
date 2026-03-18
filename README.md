@@ -112,27 +112,27 @@ The Tableau workbook includes:
 ## Dashboard Previews
 
 ### Dashboard 1: National Healthcare Cost Overview
-![National Overview](images/dashboard1.png)
+![National Overview](images/Dashboard%201%20-%20National%20Overview.png)
 
 Septicemia treatment cost variation across U.S. states, showing geographic patterns and distribution.
 
 ### Dashboard 2: Cost vs Quality Analysis
-![Cost vs Quality](images/dashboard2.png)
+![Cost vs Quality](images/Dashboard%202%20-%20Cost%20vs%20Quality.png)
 
 Statistical analysis demonstrating zero correlation (R² = 0.001) between healthcare spending and hospital quality ratings.
 
 ### Dashboard 3: Alaska Deep Dive
-![Alaska Analysis](images/dashboard3.png)
+![Alaska Analysis](images/Dashboard%203%20-%20Alaska%20Deep%20Dive.png)
 
 Comparative analysis of Alaska vs Vermont and peer states, highlighting the triple burden of high cost, high vulnerability, and poor quality.
 
 ### Dashboard 4: Rural Premium Analysis
-![Rural Premium](images/dashboard4.png)
+![Rural Premium](images/Dashboard%204%20-%20Rural%20Premium%20Analysis.png)
 
 National analysis showing rural healthcare premiums are rare - only 4 of 51 states charge rural areas more than urban.
 
 ### Story Mode: Interactive Presentation
-![Story Mode](images/story_slide1.png)
+![Story Mode](images/Story%20-%20Healthcare%20Cost%20Analysis.png)
 
 Five-slide interactive story walking through key findings and policy implications.
 
